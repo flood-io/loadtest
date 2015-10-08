@@ -8,6 +8,8 @@ ENV DYNAMIC_VERSION f893a7971d85335127f080f03857065a22d82c79
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     mkdir -p /tmp/src && \
     cd /tmp/src && \
+    wget --no-check-certificate https://github.com/openresty/echo-nginx-module/archive/v0.58.tar.gz && \
+    tar -zxvf v0.58.tar.gz && \
     wget --no-check-certificate https://github.com/GUI/nginx-upstream-dyanmic-servers/archive/${DYNAMIC_VERSION}.tar.gz && \
     tar -zxvf ${DYNAMIC_VERSION}.tar.gz && \
     wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
@@ -15,8 +17,10 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     cd /tmp/src/${NGINX_VERSION} && \
     ./configure \
         --add-module=/tmp/src/nginx-upstream-dyanmic-servers-${DYNAMIC_VERSION} \
+        --add-module=/tmp/src/echo-nginx-module-0.58 \
         --with-http_ssl_module \
         --with-http_gzip_static_module \
+        --with-http_stub_status_module \
         --prefix=/etc/nginx \
         --http-log-path=/var/log/nginx/access.log \
         --error-log-path=/var/log/nginx/error.log \
