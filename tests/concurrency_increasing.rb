@@ -22,7 +22,16 @@ test do
           flight_time: 60,
           rampup: 5 do
 
-    get name: '/slow',     url: '/slow'
+    get name: 'Sign in',     url: '/slow'
+    get name: 'Home',     url: '/'
+    get name: 'View cart',     url: '/degrading'
+    get name: 'Add item to cart',     url: '/degrading'
+    get name: 'Remove item from cart',     url: '/headers'
+    get name: 'Search for item',     url: '/degrading'
+    get name: 'Search for random items',     url: '/degrading'
+    get name: 'Checkout',     url: '/degrading'
+    get name: 'Confirm payment details',     url: '/degrading'
+    get name: 'Contact support',     url: '/degrading'
 
     # view_results
   end
