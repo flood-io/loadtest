@@ -8,6 +8,10 @@ ENV DYNAMIC_VERSION f893a7971d85335127f080f03857065a22d82c79
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     mkdir -p /tmp/src && \
     cd /tmp/src && \
+    wget --no-check-certificate https://github.com/simpl/ngx_devel_kit/archive/v0.2.19.tar.gz && \
+    tar -zxvf v0.2.19.tar.gz && \
+    wget --no-check-certificate https://github.com/openresty/set-misc-nginx-module/archive/v0.29.tar.gz && \
+    tar -zxvf v0.29.tar.gz && \
     wget --no-check-certificate https://github.com/openresty/echo-nginx-module/archive/v0.58.tar.gz && \
     tar -zxvf v0.58.tar.gz && \
     wget --no-check-certificate https://github.com/GUI/nginx-upstream-dyanmic-servers/archive/${DYNAMIC_VERSION}.tar.gz && \
@@ -18,6 +22,8 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     ./configure \
         --add-module=/tmp/src/nginx-upstream-dyanmic-servers-${DYNAMIC_VERSION} \
         --add-module=/tmp/src/echo-nginx-module-0.58 \
+        --add-module=/tmp/src/ngx_devel_kit-0.2.19 \
+        --add-module=/tmp/src/set-misc-nginx-module-0.29 \
         --with-http_ssl_module \
         --with-http_gzip_static_module \
         --with-http_stub_status_module \
