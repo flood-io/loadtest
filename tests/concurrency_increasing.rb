@@ -23,10 +23,10 @@ test do
           rampup: 5 do
 
     get name: 'Sign in',     url: '/slow'
-    get name: 'Home',     url: '/'
+    get name: 'Home',     url: '/degrading'
     get name: 'View cart',     url: '/degrading'
     get name: 'Add item to cart',     url: '/degrading'
-    get name: 'Remove item from cart',     url: '/headers'
+    get name: 'Remove item from cart',     url: '/degrading'
     get name: 'Search for item',     url: '/degrading'
     get name: 'Search for random items',     url: '/degrading'
     get name: 'Checkout',     url: '/degrading'
