@@ -14,6 +14,8 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     tar -zxvf v0.29.tar.gz && \
     wget --no-check-certificate https://github.com/openresty/echo-nginx-module/archive/v0.58.tar.gz && \
     tar -zxvf v0.58.tar.gz && \
+    wget --no-check-certificate https://github.com/arut/nginx-let-module/archive/v0.0.4.tar.gz && \
+    tar -zxvf v0.0.4.tar.gz && \
     wget --no-check-certificate https://github.com/GUI/nginx-upstream-dyanmic-servers/archive/${DYNAMIC_VERSION}.tar.gz && \
     tar -zxvf ${DYNAMIC_VERSION}.tar.gz && \
     wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
@@ -24,6 +26,7 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
         --add-module=/tmp/src/echo-nginx-module-0.58 \
         --add-module=/tmp/src/ngx_devel_kit-0.2.19 \
         --add-module=/tmp/src/set-misc-nginx-module-0.29 \
+        --add-module=/tmp/src/nginx-let-module-0.0.4 \
         --with-http_ssl_module \
         --with-http_gzip_static_module \
         --with-http_stub_status_module \
