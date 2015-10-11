@@ -22,13 +22,28 @@ test do
           flight_time: 60,
           rampup: 5 do
 
-    get name: 'Sign in',     url: '/slow'
-    get name: 'Home',     url: '/'
-    get name: 'View cart',     url: '/slow'
-    get name: 'Add item to cart',     url: '/random'
-    get name: 'Remove item from cart',     url: '/random'
-    get name: 'Search for item',     url: '/degrading'
-    get name: 'Search for random items',     url: '/degrading'
+    get name: 'Home', url: '/' do
+      extract name: 'token', css: 'input#authenticity_token'
+    end
+
+    post name: 'Sign in', url: '/app/submit/login', fill_in: {
+      username: 'loadtester',
+      password: 'mrRobot',
+      token: '${token}'
+    }
+
+    post name: 'Search for item', url: '/app/search', fill_in: {
+      product: 'USB stick'
+    }
+
+    get name: 'Search for random item', url: '/app/search/technology'
+
+
+
+
+    get name: 'View cart',              url: '/slow'
+    get name: 'Add item to cart',            url: '/random'
+    get name: 'Remove item from cart',       url: '/random'
     get name: 'Checkout',     url: '/slow'
     get name: 'Confirm payment details',     url: '/degrading'
     get name: 'Contact support',     url: '/'
