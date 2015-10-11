@@ -2,25 +2,21 @@ require 'ruby-jmeter'
 
 test do
   defaults domain: 'loadtest.flood.io',
-           protocol: 'https',
-           image_parser: false
+           protocol: 'https'
 
   with_user_agent :chrome
 
-  header [
-    { name: 'Accept-Encoding', value: 'gzip,deflate,sdch' },
-    { name: 'Accept', value: 'text/javascript, text/html, application/xml, text/xml, */*' }
-  ]
+  with_gzip
 
-  step  total_threads: 2000,
-          initial_delay: 0,
-          start_threads: 200,
-          add_threads: 0,
-          start_every: 60,
-          stop_threads: 50,
-          stop_every: 5,
-          flight_time: 60,
-          rampup: 5 do
+  stepping_thread_group   total_threads: 2000,
+                          initial_delay: 0,
+                          start_threads: 200,
+                          add_threads: 0,
+                          start_every: 60,
+                          stop_threads: 50,
+                          stop_every: 5,
+                          flight_time: 60,
+                          rampup: 5 do
 
     get name: 'Home', url: '/' do
       extract name: 'token', css: 'input#authenticity_token'
@@ -33,28 +29,34 @@ test do
     }
 
     post name: 'Search for item', url: '/app/search', fill_in: {
-      product: 'USB stick'
+      product: 'Blank CD'
     }
 
-    get name: 'Search for random item', url: '/app/search/technology'
+    get name: 'Search for random item', url: '/app/search/technology' do
+      extract name: 'first_item_id', regex: '.class="item" id="(.+?)'
+    end
 
+    get name: 'View cart', url: '/app/view/cart'
 
+    post name: 'Add item to cart', url: '/app/submit/item',
+      raw_body: {
+        name: "Blank CD",
+        price: 10,
+        quantity: 24,
+        product_id: "${first_item_id"
+      }.to_json
 
+    put name: 'Remove item from cart', url: '/app/remove/item'
 
-    get name: 'View cart',              url: '/slow'
-    get name: 'Add item to cart',            url: '/random'
-    get name: 'Remove item from cart',       url: '/random'
-    get name: 'Checkout',     url: '/slow'
-    get name: 'Confirm payment details',     url: '/degrading'
-    get name: 'Contact support',     url: '/'
+    get name: 'Checkout', url: '/app/checkout'
 
-    # view_results
+    get name: 'Confirm payment details', url: '/app/checkout/payment'
+
+    get name: 'Contact support', url: '/app/support'
   end
+
 end.flood ENV['FLOOD_API_TOKEN'], {
   region: 'us-west-2',
   privacy: 'public',
-  name: 'Increasing Concurrency',
-  tags: 'shakeout'
+  name: 'Increasing Concurrency on Shopping Cart'
 }
-# end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
-# end.jmx
