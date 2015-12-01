@@ -48,8 +48,6 @@ VOLUME ["/var/log/nginx", "/etc/nginx/conf.d"]
 
 WORKDIR /etc/nginx
 
-EXPOSE 80 443
-
 ADD nginx.conf /etc/nginx/conf/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
