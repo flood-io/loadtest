@@ -30,7 +30,7 @@ test do
     random_timer 1000, 5000
 
     get '/production'do
-      assert json: '.elapsed', value: 'seconds'
+      assert json: '.status', value: 'OK'
     end
 
     post '/production',
@@ -38,11 +38,12 @@ test do
         username: 'MrRobot',
         password: 4141414141
       } do
+        extract json: '.connections_active', name: 'connections_active'
       with_xhr
     end
 
-    delete '/production' do
-      duration_assertion duration: 1000
+    delete '/production?connections=${connections_active}' do
+      duration_assertion duration: 5000
     end
 
     view_results
