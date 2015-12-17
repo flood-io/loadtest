@@ -6,10 +6,6 @@ test do
             protocol: 'https',
             implementation: 'HttpClient3.1' # https://bz.apache.org/bugzilla/show_bug.cgi?id=57935
 
-  cache clearEachIteration: 'true'
-
-  cookies
-
   with_user_agent :iphone
 
   header [
@@ -17,23 +13,23 @@ test do
     { name: 'Accept', value: 'application/json' },
   ]
 
-  step  total_threads: 200,
+  step  total_threads: 1_000,
         initial_delay: 0,
         start_threads: 20,
         add_threads: 0,
         start_every: 30,
         stop_threads: 50,
         stop_every: 5,
-        flight_time: 1800,
+        flight_time: 1_800,
         rampup: 5 do
 
-    random_timer 1000, 5000
+    random_timer 500, 1_000
 
-    get '/production'do
+    get name: 'entry point', url: '/production' do
       assert json: '.status', value: 'OK'
     end
 
-    post '/production',
+    post name: 'create session', url: '/production',
       fill_in: {
         username: 'MrRobot',
         password: 4141414141
@@ -42,15 +38,15 @@ test do
       with_xhr
     end
 
-    delete '/production?connections=${connections_active}' do
-      duration_assertion duration: 5000
+    delete name: 'destroy session', url: '/production?connections=${connections_active_1}' do
+      duration_assertion duration: 5_000
     end
 
     view_results
   end
-# end.flood ENV['FLOOD_API_TOKEN'], {
-#   region: 'ap-southeast-2',
-#   privacy: 'public',
-#   name: 'Shakeout Loadtest API',
-# }
-end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+end.flood ENV['FLOOD_API_TOKEN'], {
+  privacy: 'public',
+  name: 'Shakeout Loadtest API',
+  grid: 'HbdJeSJy0NYsj5YxfKhGcg'
+}
+# end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
