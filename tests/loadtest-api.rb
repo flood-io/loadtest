@@ -47,6 +47,6 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'], {
   privacy: 'public',
   name: 'Shakeout Loadtest API',
-  grid: 'HbdJeSJy0NYsj5YxfKhGcg'
+  grid: 'Wvf78fVsSWvTekNftt3ZsQ'
 }
 # end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
