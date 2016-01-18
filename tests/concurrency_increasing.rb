@@ -53,10 +53,11 @@ test do
     get name: 'Confirm payment details', url: '/app/checkout/payment'
 
     get name: 'Contact support', url: '/app/support'
+
+    duration_assertion duration: 2_000
   end
 
 end.flood ENV['FLOOD_API_TOKEN'], {
-  region: 'us-west-2',
   privacy: 'public',
   name: 'Increasing Concurrency on Shopping Cart'
 }
