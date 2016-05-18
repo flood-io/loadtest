@@ -22,7 +22,6 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     tar -zxvf ${NGINX_VERSION}.tar.gz && \
     cd /tmp/src/${NGINX_VERSION} && \
     ./configure \
-        --add-module=/tmp/src/nginx-upstream-dyanmic-servers-${DYNAMIC_VERSION} \
         --add-module=/tmp/src/echo-nginx-module-0.58 \
         --add-module=/tmp/src/ngx_devel_kit-0.2.19 \
         --add-module=/tmp/src/set-misc-nginx-module-0.29 \
