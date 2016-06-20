@@ -54,10 +54,11 @@ test do
 
     get name: 'Contact support', url: '/app/support'
 
-    duration_assertion duration: 2_000
+    duration_assertion duration: 10_000
+    random_timer 60_000, 120_000
   end
-
 end.flood ENV['FLOOD_API_TOKEN'], {
   privacy: 'public',
-  name: 'Increasing Concurrency on Shopping Cart'
+  name: 'Increasing Concurrency on Shopping Cart',
+  region: 'us-east-1'
 }

@@ -32,7 +32,6 @@ test do
     # view_results
   end
 end.flood ENV['FLOOD_API_TOKEN'], {
-  region: 'us-west-2',
   privacy: 'public',
   name: 'Increasing RPM',
   tags: 'shakeout'

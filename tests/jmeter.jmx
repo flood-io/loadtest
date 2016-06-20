@@ -15,8 +15,8 @@
         <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="HttpRequestDefaults" enabled="true">
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
-        <stringProp name="HTTPSampler.domain">7wam4h0629.execute-api.us-west-2.amazonaws.com</stringProp>
-        <stringProp name="HTTPSampler.port">443</stringProp>
+        <stringProp name="HTTPSampler.domain">loadtest.flood.io</stringProp>
+        <stringProp name="HTTPSampler.port"/>
         <stringProp name="HTTPSampler.connect_timeout"/>
         <stringProp name="HTTPSampler.response_timeout"/>
         <stringProp name="HTTPSampler.protocol">https</stringProp>
@@ -29,64 +29,176 @@
         <stringProp name="HTTPSampler.embedded_url_re"/>
       </ConfigTestElement>
       <hashTree/>
-      <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HttpCacheManager" enabled="true">
-        <boolProp name="clearEachIteration">true</boolProp>
-        <boolProp name="useExpires">false</boolProp>
-      </CacheManager>
-      <hashTree/>
-      <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HttpCookieManager" enabled="true">
-        <collectionProp name="CookieManager.cookies"/>
-        <boolProp name="CookieManager.clearEachIteration">false</boolProp>
-        <stringProp name="CookieManager.policy">default</stringProp>
-        <stringProp name="CookieManager.implementation">org.apache.jmeter.protocol.http.control.HC4CookieHandler</stringProp>
-      </CookieManager>
-      <hashTree/>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="User-Agent" enabled="true">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">User-Agent</stringProp>
-            <stringProp name="Header.value">Mozilla/5.0 (iPhone; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B179 Safari/7534.48.3</stringProp>
+            <stringProp name="Header.value">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5</stringProp>
           </elementProp>
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HttpHeaderManager" enabled="true">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Accept-Encoding" enabled="true">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">x-api-key</stringProp>
-            <stringProp name="Header.value">BguwPvwIHD4vTTq2MHL3HTWKibe4LHC9GZYV4FUi</stringProp>
-          </elementProp>
-          <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">Accept</stringProp>
-            <stringProp name="Header.value">application/json</stringProp>
+            <stringProp name="Header.name">Accept-Encoding</stringProp>
+            <stringProp name="Header.value">gzip, deflate</stringProp>
           </elementProp>
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="ThreadGroup.num_threads">200</stringProp>
-        <stringProp name="Threads initial delay">0</stringProp>
-        <stringProp name="Start users count">20</stringProp>
-        <stringProp name="Start users count burst">0</stringProp>
-        <stringProp name="Start users period">30</stringProp>
-        <stringProp name="Stop users count">50</stringProp>
-        <stringProp name="Stop users period">5</stringProp>
-        <stringProp name="flighttime">1800</stringProp>
-        <stringProp name="rampUp">5</stringProp>
+      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Stepping Thread Group" enabled="true">
+        <collectionProp name="ultimatethreadgroupdata">
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="0">0</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="1200">1200</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="1300">1300</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="1800">1800</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="2100">2100</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="2400">2400</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="2700">2700</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="3000">3000</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="3300">3300</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="3600">3600</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="3900">3900</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="4200">4200</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="4300">4300</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="4600">4600</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="4900">4900</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="5200">5200</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="600">600</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+          <collectionProp name="index">
+            <stringProp name="300">300</stringProp>
+            <stringProp name="5500">5500</stringProp>
+            <stringProp name="300">300</stringProp>
+            <stringProp name="900">900</stringProp>
+            <stringProp name="5">5</stringProp>
+          </collectionProp>
+        </collectionProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-      </kg.apc.jmeter.threads.SteppingThreadGroup>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      </kg.apc.jmeter.threads.UltimateThreadGroup>
       <hashTree>
-        <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="GaussianRandomTimer" enabled="true">
-          <stringProp name="ConstantTimer.delay">1000</stringProp>
-          <stringProp name="RandomTimer.range">5000</stringProp>
-        </GaussianRandomTimer>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/production" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="/production" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Home" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain"/>
@@ -95,7 +207,7 @@
           <stringProp name="HTTPSampler.response_timeout"/>
           <stringProp name="HTTPSampler.protocol"/>
           <stringProp name="HTTPSampler.contentEncoding"/>
-          <stringProp name="HTTPSampler.path">/production</stringProp>
+          <stringProp name="HTTPSampler.path">/</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -107,34 +219,39 @@
           <stringProp name="TestPlan.comments"/>
         </HTTPSamplerProxy>
         <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="ResponseAssertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">.elapsed</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-            <stringProp name="Assertion.scope">all</stringProp>
-            <stringProp name="Scope.variable"/>
-          </ResponseAssertion>
+          <HtmlExtractor guiclass="HtmlExtractorGui" testclass="HtmlExtractor" testname="token" enabled="true">
+            <stringProp name="HtmlExtractor.refname">token</stringProp>
+            <stringProp name="HtmlExtractor.expr">input#authenticity_token</stringProp>
+            <stringProp name="HtmlExtractor.attribute"/>
+            <stringProp name="HtmlExtractor.default"/>
+            <stringProp name="HtmlExtractor.match_number"/>
+            <stringProp name="HtmlExtractor.extractor_impl"/>
+          </HtmlExtractor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/production" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="/production" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Sign in" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Sign in" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="username" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">MrRobot</stringProp>
+                <stringProp name="Argument.value">loadtester</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">username</stringProp>
               </elementProp>
               <elementProp name="password" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">4141414141</stringProp>
+                <stringProp name="Argument.value">mrRobot</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">password</stringProp>
+              </elementProp>
+              <elementProp name="token" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${token}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">token</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
@@ -144,7 +261,7 @@
           <stringProp name="HTTPSampler.response_timeout"/>
           <stringProp name="HTTPSampler.protocol"/>
           <stringProp name="HTTPSampler.contentEncoding"/>
-          <stringProp name="HTTPSampler.path">/production</stringProp>
+          <stringProp name="HTTPSampler.path">/app/submit/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -155,19 +272,39 @@
           <stringProp name="HTTPSampler.embedded_url_re"/>
           <stringProp name="TestPlan.comments"/>
         </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="X-Requested-With" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-Requested-With</stringProp>
-                <stringProp name="Header.value">XMLHttpRequest</stringProp>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search for item" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Search for item" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="product" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">Blank CD</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">product</stringProp>
               </elementProp>
             </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/production" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="/production" enabled="true">
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/search</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search for random item" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Search for random item" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain"/>
@@ -176,8 +313,8 @@
           <stringProp name="HTTPSampler.response_timeout"/>
           <stringProp name="HTTPSampler.protocol"/>
           <stringProp name="HTTPSampler.contentEncoding"/>
-          <stringProp name="HTTPSampler.path">/production</stringProp>
-          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <stringProp name="HTTPSampler.path">/app/search/technology</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -188,11 +325,155 @@
           <stringProp name="TestPlan.comments"/>
         </HTTPSamplerProxy>
         <hashTree>
-          <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="DurationAssertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">1000</stringProp>
-          </DurationAssertion>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="first_item_id" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">first_item_id</stringProp>
+            <stringProp name="RegexExtractor.regex">.class="item" id="(.+?)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"/>
+            <stringProp name="RegexExtractor.match_number"/>
+          </RegexExtractor>
           <hashTree/>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="View cart" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="View cart" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/view/cart</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add item to cart" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Add item to cart" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{"name":"Blank CD","price":10,"quantity":24,"product_id":"${first_item_id"}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/submit/item</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Remove item from cart" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Remove item from cart" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/remove/item</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Checkout" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Checkout" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/checkout</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Confirm payment details" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Confirm payment details" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/checkout/payment</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Contact support" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Contact support" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"/>
+          <stringProp name="HTTPSampler.port"/>
+          <stringProp name="HTTPSampler.connect_timeout"/>
+          <stringProp name="HTTPSampler.response_timeout"/>
+          <stringProp name="HTTPSampler.protocol"/>
+          <stringProp name="HTTPSampler.contentEncoding"/>
+          <stringProp name="HTTPSampler.path">/app/support</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation"/>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"/>
+          <stringProp name="TestPlan.comments"/>
+        </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
     </hashTree>
   </hashTree>
