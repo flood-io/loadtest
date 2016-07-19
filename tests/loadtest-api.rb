@@ -4,7 +4,7 @@ test do
   defaults  domain: '7wam4h0629.execute-api.us-west-2.amazonaws.com',
             port: 443,
             protocol: 'https',
-            implementation: 'HttpClient3.1' # https://bz.apache.org/bugzilla/show_bug.cgi?id=57935
+            implementation: 'HttpClient3.1'
 
   with_user_agent :iphone
 
