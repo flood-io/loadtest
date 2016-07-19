@@ -49,4 +49,6 @@ WORKDIR /etc/nginx
 
 ADD nginx.conf /etc/nginx/conf/nginx.conf
 
+ADD images/ /etc/nginx/www/images
+
 CMD ["nginx", "-g", "daemon off;"]
