@@ -34,7 +34,8 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'], {
   privacy: 'public',
   name: 'Increasing RPM',
-  tags: 'shakeout'
+  tags: 'shakeout',
+  override_parameters: '-Dsun.net.inetaddr.ttl=0'
 }
 # end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
 # end.jmx

@@ -43,7 +43,7 @@ test do
         name: "Blank CD",
         price: 10,
         quantity: 24,
-        product_id: "${first_item_id"
+        product_id: "${first_item_id}"
       }.to_json
 
     put name: 'Remove item from cart', url: '/app/remove/item'
@@ -60,5 +60,6 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'], {
   privacy: 'public',
   name: 'Increasing Concurrency on Shopping Cart',
-  region: 'us-east-1'
+  region: 'us-east-1',
+  override_parameters: '-Dsun.net.inetaddr.ttl=0'
 }

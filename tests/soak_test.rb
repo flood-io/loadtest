@@ -187,10 +187,11 @@ test do
 
     get name: 'Contact support', url: '/app/support'
   end
-# end.flood ENV['FLOOD_API_TOKEN'], {
-#   region: 'us-west-2',
-#   privacy: 'public',
-#   name: 'Shopping Cart Soak Test'
-# }
-# # end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
-end.jmx
+end.flood ENV['FLOOD_API_TOKEN'], {
+  region: 'us-west-2',
+  privacy: 'public',
+  name: 'Shopping Cart Soak Test',
+  override_parameters: '-Dsun.net.inetaddr.ttl=0'
+}
+# end.run(path: '/usr/share/jmeter-2.13/bin/', gui: true)
+# end.jmx
