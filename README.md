@@ -1,1 +1,1 @@
-This is a simple nginx image which provides a loadtest target at https://loadtest.flood.io
+This is a simple nginx image which provides a loadtest target at https://flooded.io
