@@ -48,6 +48,7 @@ VOLUME ["/var/log/nginx", "/etc/nginx/conf.d"]
 WORKDIR /etc/nginx
 
 ADD nginx.conf /etc/nginx/conf/nginx.conf
+ADD .htpasswd /etc/nginx/.htpasswd
 
 ADD images/ /etc/nginx/www/images
 
