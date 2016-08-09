@@ -27,5 +27,6 @@ flood_report=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/flood
 
 echo
 echo "[$(date +%FT%T)+00:00] Detailed results at https://flood.io/$flood_uuid"
+echo "---"
 echo "$flood_report"
 
