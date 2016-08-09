@@ -12,8 +12,9 @@ flood_uuid=$(curl --silent -u $FLOOD_API_TOKEN: -X POST https://api.flood.io/flo
   -F "flood[rampup]=30" \
   -F "flood[duration]=120" \
   -F "flood[privacy]=public" \
-  -F "flood[name]=CI Build $BUILD_NUMBER" \
-  -F "flood[tag_list]=ci,shakeout" \
+  -F "flood[project]=CI Pipeline" \
+  -F "flood[name]=Build $BUILD_NUMBER" \
+  -F "flood[tag_list]=ci,load" \
   -F "flood_files[]=@$WORKSPACE/tests/load.jmx" | /tmp/jq -r ".uuid")
 
 echo "[$(date +%FT%T)+00:00] Waiting for flood https://flood.io/$flood_uuid to finish"
