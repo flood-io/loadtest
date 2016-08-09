@@ -26,8 +26,8 @@ done
 flood_report=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid/report | \
   /tmp/jq -r ".summary")
 
-error_rate=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid | jq -r .error_rate)
-response_time=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid | jq -r .response_time)
+error_rate=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid | /tmp/jq -r .error_rate)
+response_time=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid | /tmp/jq -r .response_time)
 
 echo
 echo "[$(date +%FT%T)+00:00] Detailed results at https://flood.io/$flood_uuid"
