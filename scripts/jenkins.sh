@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 echo "[$(date +%FT%T)+00:00] Checking dependencies"
 [ -f " /tmp/jq" ] || curl --silent -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 > /tmp/jq
