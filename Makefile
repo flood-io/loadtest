@@ -17,4 +17,4 @@ show:
 	terraform show
 
 loadtest:
-	DOMAIN=`terraform output dns_name` ruby tests/load.rb
+	DOMAIN=$$(terraform output dns_name) ruby tests/load.rb
