@@ -1,0 +1,32 @@
+#cloud-config
+users:
+  - name: core
+    coreos-ssh-import-github-users:
+      - 90kts
+    groups:
+      - sudo
+      - docker
+      - systemd-journal
+coreos:
+  update:
+    reboot-strategy: off
+  units:
+    - name: etcd2.service
+      command: stop
+    - name: fleet.service
+      command: stop
+    - name: loadtest.service
+      command: start
+      content: |
+        [Unit]
+        Description=flooded.io
+        After=docker.service
+        [Service]
+        User=core
+        TimeoutStartSec=0
+        Restart=always
+        ExecStartPre=-/usr/bin/docker kill loadtest
+        ExecStartPre=-/usr/bin/docker rm loadtest
+        ExecStartPre=/usr/bin/docker pull floodio/loadtest
+        ExecStart=/usr/bin/docker run --name loadtest --log-driver=none -p 8008:8008 floodio/loadtest
+        ExecStop=/usr/bin/docker stop loadtest

@@ -39,7 +39,6 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     rm -rf /tmp/src && \
     rm -rf /var/cache/apk/*
 
-# forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
@@ -47,9 +46,9 @@ VOLUME ["/var/log/nginx", "/etc/nginx/conf.d"]
 
 WORKDIR /etc/nginx
 
-ADD nginx.conf /etc/nginx/conf/nginx.conf
-ADD .htpasswd /etc/nginx/.htpasswd
+ADD config/nginx.conf /etc/nginx/conf/nginx.conf
+ADD config/.htpasswd /etc/nginx/.htpasswd
 
-ADD images/ /etc/nginx/www/images
+EXPOSE 8008
 
 CMD ["nginx", "-g", "daemon off;"]
