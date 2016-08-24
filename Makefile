@@ -16,5 +16,5 @@ destroy:
 show:
 	terraform show
 
-load:
-	DOMAIN=$(terraform output dns_name) ruby tests/load.rb
+loadtest:
+	DOMAIN=`terraform output dns_name` ruby tests/load.rb

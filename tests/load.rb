@@ -2,10 +2,9 @@ require 'ruby-jmeter'
 
 test do
   # defaults  domain: '7wam4h0629.execute-api.us-west-2.amazonaws.com',
-  # defaults  domain: 'flooded-elb-122097577.us-east-1.elb.amazonaws.com',
   defaults  domain: ENV['DOMAIN'] ||= 'flooded.io',
-            port: 443,
-            protocol: 'https',
+            port: 80,
+            protocol: 'http',
             implementation: 'HttpClient3.1'
 
   with_user_agent :iphone
