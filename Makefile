@@ -5,16 +5,16 @@ push:
 	docker push floodio/loadtest
 
 plan:
-	cd config && terraform plan
+	terraform plan config
 
 apply:
-	cd config && terraform apply
+	terraform apply config
 
 destroy:
-	cd config && terraform destroy
+	terraform destroy config
 
 show:
-	cd config && terraform show
+	terraform show
 
 load:
-	ruby tests/load.rb
+	DOMAIN=$(terraform output dns_name) ruby tests/load.rb

@@ -12,7 +12,7 @@ resource "aws_launch_configuration" "flooded-launch-config" {
   name = "flooded-launch-config"
   image_id =  "ami-6d138f7a"
   instance_type = "m3.medium"
-  user_data = "${file("cloudconfig.yml")}"
+  user_data = "${file("config/cloudconfig.yml")}"
   security_groups = ["${aws_security_group.flooded-sg.id}"]
 }
 
