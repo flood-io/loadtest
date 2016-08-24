@@ -11,8 +11,9 @@ provider "aws" {
 resource "aws_launch_configuration" "flooded-launch-config" {
   name = "flooded-launch-config"
   image_id =  "ami-6d138f7a"
-  instance_type = "t2.micro"
+  instance_type = "m3.medium"
   user_data = "${file("cloudconfig.yml")}"
+  security_groups = ["${aws_security_group.flooded-sg.id}"]
 }
 
 resource "aws_autoscaling_group" "flooded-asg" {
@@ -28,9 +29,47 @@ resource "aws_autoscaling_group" "flooded-asg" {
   load_balancers = ["${aws_elb.flooded-elb.id}"]
 }
 
+resource "aws_security_group" "flooded-sg" {
+  name = "allow_all"
+  description = "Allow all web traffic"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    self = true
+  }
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    self = true
+  }
+
+  ingress {
+    from_port = 8008
+    to_port = 8008
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    self = true
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    self = true
+  }
+}
+
 resource "aws_elb" "flooded-elb" {
   name = "flooded-elb"
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
+  security_groups = ["${aws_security_group.flooded-sg.id}"]
 
   listener {
     instance_port = 8008
@@ -51,4 +90,8 @@ resource "aws_elb" "flooded-elb" {
   idle_timeout = 400
   connection_draining = true
   connection_draining_timeout = 400
+}
+
+output "dns_name" {
+  value = "${aws_elb.flooded-elb.dns_name}"
 }
