@@ -9,7 +9,6 @@ test do
   with_user_agent :iphone
 
   header [
-    { name: 'Authorization', value: 'Basic ZGVtb3VzZXI6ZGVtb3VzZXI=' },
     { name: 'Accept', value: 'application/json' },
   ]
 
@@ -69,5 +68,5 @@ test do
     # view_results
   end
 # end.jmx(file: 'tests/load.jmx')
-# end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
-end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
+end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
+# end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
