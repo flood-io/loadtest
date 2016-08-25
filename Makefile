@@ -51,9 +51,9 @@ check_health:
 	@echo ELB instance health
 	@aws --profile=flooded --region us-east-1 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
 	@echo ELB nginx
-	@make ping-elb
+	@make check_elb
 	@echo API
-	@make ping-api
+	@make check_api
 
 loadtest: api_dns_name
 	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
