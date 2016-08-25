@@ -68,4 +68,4 @@ test do
     # view_results
   end
 # end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
-end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
+end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Loadtest API', region: 'us-east-1', override_parameters: '-Dsun.net.inetaddr.ttl=0' }

@@ -55,5 +55,5 @@ check_health:
 	@echo API
 	@make check_api
 
-loadtest: api_dns_name
+loadtest: get_api_dns_name
 	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
