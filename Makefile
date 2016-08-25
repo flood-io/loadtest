@@ -1,28 +1,28 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 build:
-	docker build -t floodio/loadtest .
+	@docker build -t floodio/loadtest .
 
 push:
-	docker push floodio/loadtest
+	@docker push floodio/loadtest
 
 elb:
-	cd terraform/elb && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/elb && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
 elb-destroy:
-	cd terraform/elb && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/elb && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
 
 asg:
-	cd terraform/asg && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/asg && TF_VAR_dd_api_key=$(DD_API_KEY) terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
 asg-destroy:
-	cd terraform/asg && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/asg && TF_VAR_dd_api_key=$(DD_API_KEY) terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
 
 api: elb_dns_name
-	cd terraform/api && TF_VAR_elb_dns_name=$(ELB_DNS_NAME) terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/api && TF_VAR_elb_dns_name=$(ELB_DNS_NAME) terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
 api-destroy: elb_dns_name
-	cd terraform/api && TF_VAR_elb_dns_name=$(ELB_DNS_NAME) terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
+	@cd terraform/api && TF_VAR_elb_dns_name=$(ELB_DNS_NAME) terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
 
 elb_dns_name:
 	$(eval ELB_DNS_NAME := $(shell terraform output -state=terraform/elb/terraform.tfstate dns_name))

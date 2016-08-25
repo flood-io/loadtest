@@ -2,6 +2,8 @@ variable "profile" {}
 variable "region" {}
 variable "shared_credentials_file" {}
 
+variable "dd_api_key" {}
+
 provider "aws" {
   shared_credentials_file = "${var.shared_credentials_file}"
   profile = "${var.profile}"
@@ -12,7 +14,7 @@ resource "aws_launch_configuration" "flooded-launch-config" {
   name = "flooded-launch-config"
   image_id =  "ami-6d138f7a"
   instance_type = "m3.medium"
-  user_data = "${file("cloudconfig.yml")}"
+  user_data = "${replace(file("cloudconfig.yml"), "DD_API_KEY", "${var.dd_api_key}")}"
   security_groups = ["allow_all"]
 }
 
