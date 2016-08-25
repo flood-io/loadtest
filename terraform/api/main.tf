@@ -2,7 +2,7 @@ variable "profile" {}
 variable "region" {}
 variable "shared_credentials_file" {}
 
-variable "uri" {}
+variable "elb_dns_name" {}
 
 provider "aws" {
   shared_credentials_file = "${var.shared_credentials_file}"
@@ -31,7 +31,21 @@ resource "aws_api_gateway_integration" "root_get_integration" {
   http_method = "${aws_api_gateway_method.root_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.root_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api"
+  uri = "http://${var.elb_dns_name}/api"
+}
+
+resource "aws_api_gateway_method_response" "root_get_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_rest_api.api_flooded.root_resource_id}"
+  http_method = "${aws_api_gateway_method.root_get.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "root_get_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_rest_api.api_flooded.root_resource_id}"
+  http_method = "${aws_api_gateway_method.root_get.http_method}"
+  status_code = "${aws_api_gateway_method_response.root_get_200.status_code}"
 }
 
 ##
@@ -56,7 +70,21 @@ resource "aws_api_gateway_integration" "oauth_post_integration" {
   http_method = "${aws_api_gateway_method.oauth_post.http_method}"
   integration_http_method = "${aws_api_gateway_method.oauth_post.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/oauth"
+  uri = "http://${var.elb_dns_name}/api/oauth"
+}
+
+resource "aws_api_gateway_method_response" "oauth_post_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.oauth.id}"
+  http_method = "${aws_api_gateway_method.oauth_post.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "oauth_post_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.oauth.id}"
+  http_method = "${aws_api_gateway_method.oauth_post.http_method}"
+  status_code = "${aws_api_gateway_method_response.oauth_post_200.status_code}"
 }
 
 resource "aws_api_gateway_method" "oauth_delete" {
@@ -72,7 +100,21 @@ resource "aws_api_gateway_integration" "oauth_delete_integration" {
   http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
   integration_http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/oauth"
+  uri = "http://${var.elb_dns_name}/api/oauth"
+}
+
+resource "aws_api_gateway_method_response" "oauth_delete_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.oauth.id}"
+  http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "oauth_delete_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.oauth.id}"
+  http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
+  status_code = "${aws_api_gateway_method_response.oauth_delete_200.status_code}"
 }
 
 ##
@@ -97,7 +139,21 @@ resource "aws_api_gateway_integration" "search_get_integration" {
   http_method = "${aws_api_gateway_method.search_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.search_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
+}
+
+resource "aws_api_gateway_method_response" "search_get_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.search.id}"
+  http_method = "${aws_api_gateway_method.search_get.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "search_get_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.search.id}"
+  http_method = "${aws_api_gateway_method.search_get.http_method}"
+  status_code = "${aws_api_gateway_method_response.search_get_200.status_code}"
 }
 
 ##
@@ -122,7 +178,21 @@ resource "aws_api_gateway_integration" "shipping_get_integration" {
   http_method = "${aws_api_gateway_method.shipping_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.shipping_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
+}
+
+resource "aws_api_gateway_method_response" "shipping_get_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.shipping.id}"
+  http_method = "${aws_api_gateway_method.shipping_get.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "shipping_get_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.shipping.id}"
+  http_method = "${aws_api_gateway_method.shipping_get.http_method}"
+  status_code = "${aws_api_gateway_method_response.shipping_get_200.status_code}"
 }
 
 ##
@@ -147,7 +217,21 @@ resource "aws_api_gateway_integration" "cart_get_integration" {
   http_method = "${aws_api_gateway_method.cart_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
+}
+
+resource "aws_api_gateway_method_response" "cart_get_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_get.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "cart_get_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_get.http_method}"
+  status_code = "${aws_api_gateway_method_response.cart_get_200.status_code}"
 }
 
 resource "aws_api_gateway_method" "cart_post" {
@@ -163,7 +247,21 @@ resource "aws_api_gateway_integration" "cart_post_integration" {
   http_method = "${aws_api_gateway_method.cart_post.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_post.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
+}
+
+resource "aws_api_gateway_method_response" "cart_post_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_post.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "cart_post_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_post.http_method}"
+  status_code = "${aws_api_gateway_method_response.cart_post_200.status_code}"
 }
 
 resource "aws_api_gateway_method" "cart_delete" {
@@ -179,8 +277,25 @@ resource "aws_api_gateway_integration" "cart_delete_integration" {
   http_method = "${aws_api_gateway_method.cart_delete.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_delete.http_method}"
   type = "HTTP"
-  uri = "http://${var.uri}/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
+
+resource "aws_api_gateway_method_response" "cart_delete_200" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_delete.http_method}"
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "cart_delete_integration_response" {
+  rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
+  resource_id = "${aws_api_gateway_resource.cart.id}"
+  http_method = "${aws_api_gateway_method.cart_delete.http_method}"
+  status_code = "${aws_api_gateway_method_response.cart_delete_200.status_code}"
+}
+
+##
+# Deployment
 
 resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on = ["aws_api_gateway_method.root_get"]
@@ -188,6 +303,6 @@ resource "aws_api_gateway_deployment" "api_deployment" {
   stage_name = "api"
 }
 
-output "api_id" {
-  value = "${aws_api_gateway_rest_api.api_flooded.id}"
+output "dns_name" {
+  value = "${aws_api_gateway_rest_api.api_flooded.id}.execute-api.us-east-1.amazonaws.com"
 }

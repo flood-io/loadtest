@@ -1,8 +1,7 @@
 require 'ruby-jmeter'
 
 test do
-  # defaults  domain: '7wam4h0629.execute-api.us-west-2.amazonaws.com',
-  defaults  domain: ENV['DOMAIN'] ||= 'flooded.io',
+  defaults  domain: ENV['API_DNS_NAME'] ||= 'flooded.io',
             port: 80,
             protocol: 'http',
             implementation: 'HttpClient3.1'
@@ -10,7 +9,6 @@ test do
   with_user_agent :iphone
 
   header [
-    { name: 'x-api-key', value: 'BguwPvwIHD4vTTq2MHL3HTWKibe4LHC9GZYV4FUi' },
     { name: 'Authorization', value: 'Basic ZGVtb3VzZXI6ZGVtb3VzZXI=' },
     { name: 'Accept', value: 'application/json' },
   ]
