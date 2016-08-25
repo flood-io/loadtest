@@ -65,8 +65,7 @@ test do
       duration_assertion duration: 5_000
     end
 
-    view_results
+    # view_results
   end
-# end.jmx(file: 'tests/load.jmx')
 # end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
-end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
+end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }

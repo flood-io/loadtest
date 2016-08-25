@@ -3,6 +3,7 @@ variable "region" {}
 variable "shared_credentials_file" {}
 
 variable "dd_api_key" {}
+variable "asg_size" { default = "3" }
 
 provider "aws" {
   shared_credentials_file = "${var.shared_credentials_file}"
@@ -13,8 +14,7 @@ provider "aws" {
 resource "aws_launch_configuration" "flooded-launch-config" {
   name = "flooded-launch-config"
   image_id =  "ami-6d138f7a"
-  # instance_type = "m3.medium"
-  instance_type = "t2.micro"
+  instance_type = "m3.medium"
   user_data = "${replace(file("cloudconfig.yml"), "DD_API_KEY", "${var.dd_api_key}")}"
   security_groups = ["allow_all"]
 }
@@ -22,11 +22,11 @@ resource "aws_launch_configuration" "flooded-launch-config" {
 resource "aws_autoscaling_group" "flooded-asg" {
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
   name = "flooded-asg"
-  max_size = "3"
-  min_size = "3"
+  max_size = "${var.asg_size}"
+  min_size = "${var.asg_size}"
   health_check_grace_period = 300
   health_check_type = "ELB"
-  desired_capacity = "3"
+  desired_capacity = "${var.asg_size}"
   force_delete = true
   launch_configuration = "${aws_launch_configuration.flooded-launch-config.name}"
   load_balancers = ["flooded-elb"]
