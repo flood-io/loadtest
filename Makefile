@@ -1,20 +1,25 @@
+ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+
 build:
 	docker build -t floodio/loadtest .
 
 push:
 	docker push floodio/loadtest
 
-plan:
-	terraform plan config
+elb:
+	cd terraform/elb && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
-apply:
-	terraform apply config
+asg:
+	cd terraform/asg && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
+
+api:
+	cd terraform/api && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
 destroy:
-	terraform destroy config
+	cd terraform/asg && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
 
-show:
-	terraform show
+ping:
+	curl -I $$(cd terraform/elb && terraform output dns_name)
 
 loadtest:
-	DOMAIN=$$(terraform output dns_name) ruby tests/load.rb
+	DOMAIN=$$(cd terraform/asg && terraform output dns_name) ruby tests/load.rb
