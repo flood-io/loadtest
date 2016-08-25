@@ -9,17 +9,26 @@ push:
 elb:
 	cd terraform/elb && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
+elb-destroy:
+	cd terraform/elb && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
+
 asg:
 	cd terraform/asg && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
-api:
-	cd terraform/api && terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
-
-destroy:
+asg-destroy:
 	cd terraform/asg && terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
 
-ping:
-	curl -I $$(cd terraform/elb && terraform output dns_name)
+api: domain
+	cd terraform/api && TF_VAR_uri=$(DOMAIN) terraform apply -var-file=$(ROOT_DIR)/terraform.tfvars
 
-loadtest:
-	DOMAIN=$$(cd terraform/asg && terraform output dns_name) ruby tests/load.rb
+api-destroy: domain
+	cd terraform/api && TF_VAR_uri=$(DOMAIN) terraform destroy -var-file=$(ROOT_DIR)/terraform.tfvars
+
+domain:
+	$(eval DOMAIN := $(shell terraform output -state=terraform/elb/terraform.tfstate dns_name))
+
+ping: domain
+	curl -I $(DOMAIN)
+
+loadtest: domain
+	ruby tests/load.rb
