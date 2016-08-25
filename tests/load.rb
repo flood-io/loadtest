@@ -4,12 +4,12 @@ test do
   defaults  domain: ENV['DOMAIN'] ||= 'flooded.io',
             port: 443,
             protocol: 'https',
-            implementation: 'HttpClient3.1'
+            implementation: 'HttpClient4'
 
   with_user_agent :iphone
 
   header [
-    { name: 'Accept', value: 'application/json' },
+    { name: 'Accept', value: 'application/json' }
   ]
 
   step  total_threads: '${__P(threads, 1000)}',
@@ -65,8 +65,8 @@ test do
       duration_assertion duration: 5_000
     end
 
-    # view_results
+    view_results
   end
 # end.jmx(file: 'tests/load.jmx')
-end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
-# end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
+# end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
+end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }

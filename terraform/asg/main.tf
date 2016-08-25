@@ -30,4 +30,9 @@ resource "aws_autoscaling_group" "flooded-asg" {
   force_delete = true
   launch_configuration = "${aws_launch_configuration.flooded-launch-config.name}"
   load_balancers = ["flooded-elb"]
+  tag {
+    key = "Name"
+    value = "flooded-asg"
+    propagate_at_launch = true
+  }
 }
