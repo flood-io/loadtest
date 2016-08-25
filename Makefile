@@ -37,4 +37,4 @@ ping-api: api_dns_name
 	curl https://$(API_DNS_NAME)/api/
 
 loadtest: api_dns_name
-	ruby tests/load.rb
+	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb

@@ -1,9 +1,9 @@
 require 'ruby-jmeter'
 
 test do
-  defaults  domain: ENV['API_DNS_NAME'] ||= 'flooded.io',
-            port: 80,
-            protocol: 'http',
+  defaults  domain: ENV['DOMAIN'] ||= 'flooded.io',
+            port: 443,
+            protocol: 'https',
             implementation: 'HttpClient3.1'
 
   with_user_agent :iphone
@@ -23,7 +23,7 @@ test do
         flight_time: 1_800,
         rampup: 5 do
 
-    random_timer 500, 1_000
+    random_timer 100, 200
 
     get name: 'entry point', url: '/api' do
       assert json: '.status', value: 'OK'
@@ -70,4 +70,4 @@ test do
   end
 # end.jmx(file: 'tests/load.jmx')
 # end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
-end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API',  override_parameters: '-Dsun.net.inetaddr.ttl=0' }
+end.flood ENV['FLOOD_API_TOKEN'], { privacy: 'public', name: 'Shakeout Loadtest API', override_parameters: '-Dsun.net.inetaddr.ttl=0' }
