@@ -187,3 +187,7 @@ resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = "${aws_api_gateway_rest_api.api_flooded.id}"
   stage_name = "api"
 }
+
+output "api_id" {
+  value = "${aws_api_gateway_rest_api.api_flooded.id}"
+}
