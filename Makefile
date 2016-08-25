@@ -31,10 +31,27 @@ api_dns_name:
 	$(eval API_DNS_NAME := $(shell terraform output -state=terraform/api/terraform.tfstate dns_name))
 
 ping-elb: elb_dns_name
-	curl -I http://$(ELB_DNS_NAME)
+	@curl --silent --connect-timeout 3 http://$(ELB_DNS_NAME)/api | jq -r .
 
 ping-api: api_dns_name
-	curl https://$(API_DNS_NAME)/api/
+	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/api/ | jq -r .
+
+ping-elb-health:
+	@aws --profile=flooded --region us-east-1 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
+
+health-checks:
+	@echo ELB instance health
+	@make ping-elb-health
+	@echo ELB nginx
+	@make ping-elb
+	@echo API
+	@make ping-api
+
+asg_first_ip:
+	$(eval ASG_FIRST_IP := $(shell aws --profile=flooded --region us-east-1 ec2 describe-instances --filters "Name=tag-key,Values=aws:autoscaling:groupName" "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[*].[Tags[?Key==`aws:autoscaling:groupName`] | [0].Value, PublicIpAddress]' --output text | sed 's/[[:space:]]/,/g' | sort -r| cut -d, -f2 | head -n1))
+
+ssh-first: asg_first_ip
+	ssh core@$(ASG_FIRST_IP)
 
 loadtest: api_dns_name
 	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb

@@ -13,7 +13,8 @@ provider "aws" {
 resource "aws_launch_configuration" "flooded-launch-config" {
   name = "flooded-launch-config"
   image_id =  "ami-6d138f7a"
-  instance_type = "m3.medium"
+  # instance_type = "m3.medium"
+  instance_type = "t2.micro"
   user_data = "${replace(file("cloudconfig.yml"), "DD_API_KEY", "${var.dd_api_key}")}"
   security_groups = ["allow_all"]
 }
