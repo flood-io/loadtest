@@ -36,7 +36,7 @@ get_api_dns_name:
 	$(eval API_DNS_NAME := $(shell terraform output -state=terraform/api/terraform.tfstate dns_name))
 
 get_asg_first_ip:
-	$(eval ASG_FIRST_IP := $(shell aws --profile=flooded --region us-east-1 ec2 describe-instances --filters "Name=tag-key,Values=aws:autoscaling:groupName" "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[*].[Tags[?Key==`aws:autoscaling:groupName`] | [0].Value, PublicIpAddress]' --output text | sed 's/[[:space:]]/,/g' | sort -r| cut -d, -f2 | head -n1))
+	$(eval ASG_FIRST_IP := $(shell aws --profile=flooded --region us-west-2 ec2 describe-instances --filters "Name=tag-key,Values=aws:autoscaling:groupName" "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[*].[Tags[?Key==`aws:autoscaling:groupName`] | [0].Value, PublicIpAddress]' --output text | sed 's/[[:space:]]/,/g' | sort -r| cut -d, -f2 | head -n1))
 
 ssh_to_first_node: get_asg_first_ip
 	ssh core@$(ASG_FIRST_IP)
@@ -49,7 +49,7 @@ check_api: get_api_dns_name
 
 check_health:
 	@echo ELB instance health
-	@aws --profile=flooded --region us-east-1 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
+	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
 	@echo ELB nginx
 	@make check_elb
 	@echo API
@@ -57,3 +57,6 @@ check_health:
 
 loadtest: get_api_dns_name
 	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
+
+loadtest_elb: get_elb_dns_name
+	DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http ruby tests/load.rb

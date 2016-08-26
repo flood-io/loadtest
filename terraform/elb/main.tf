@@ -47,7 +47,7 @@ resource "aws_security_group" "flooded-sg" {
 
 resource "aws_elb" "flooded-elb" {
   name = "flooded-elb"
-  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1d", "us-east-1e"]
+  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
   security_groups = ["${aws_security_group.flooded-sg.id}"]
 
   listener {

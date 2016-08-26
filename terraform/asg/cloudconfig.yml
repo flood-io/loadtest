@@ -54,7 +54,7 @@ coreos:
         ExecStartPre=-/usr/bin/docker kill dd-agent
         ExecStartPre=-/usr/bin/docker rm dd-agent
         ExecStartPre=-/usr/bin/docker pull datadog/docker-dd-agent:latest
-        ExecStart=/usr/bin/docker run --name dd-agent --net=host -v /home/core/conf.d:/conf.d:ro -v /var/run/docker.sock:/var/run/docker.sock -v /proc/:/host/proc/:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro -e API_KEY=DD_API_KEY datadog/docker-dd-agent:latest
+        ExecStart=/usr/bin/docker run --name dd-agent --net=host -v /home/core/conf.d:/conf.d:ro -v /var/run/docker.sock:/var/run/docker.sock -v /proc/:/host/proc/:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro -e API_KEY=DD_API_KEY -e TAGS=asg:flooded-io datadog/docker-dd-agent:latest
         ExecStop=/usr/bin/docker stop dd-agent
     - name: loadtest.service
       command: start

@@ -2,8 +2,8 @@ require 'ruby-jmeter'
 
 test do
   defaults  domain: ENV['DOMAIN'] ||= 'flooded.io',
-            port: 443,
-            protocol: 'https',
+            port: ENV['PORT'] ||= 443,
+            protocol: ENV['PROTOCOL'] ||= 'https',
             implementation: 'HttpClient4'
 
   with_user_agent :iphone
