@@ -37,6 +37,14 @@ create_grid:
 	  -F "grid[stop_after]=60" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 
+create_grid_control:
+	@curl --silent -u ${FLOOD_API_TOKEN}: -X POST https://api.flood.io/grids \
+	  -F "grid[region]=us-east-1" \
+	  -F "grid[infrastructure]=demand" \
+	  -F "grid[instance_quantity]=1" \
+	  -F "grid[stop_after]=60" \
+	  -F "grid[instance_type]=m4.xlarge" | jq -r .
+
 get_elb_dns_name:
 	$(eval ELB_DNS_NAME := $(shell terraform output -state=terraform/elb/terraform.tfstate dns_name))
 
@@ -73,4 +81,7 @@ loadtest: get_api_dns_name
 	@DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
 
 loadtest_elb: get_elb_dns_name
-	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http ruby tests/load.rb
+	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=1000 ruby tests/load.rb
+
+loadtest_elb_control: get_elb_dns_name
+	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-east-1 THREADS=10 ruby tests/load.rb

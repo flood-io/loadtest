@@ -12,7 +12,7 @@ test do
     { name: 'Accept', value: 'application/json' }
   ]
 
-  step  total_threads: '${__P(threads, 1000)}',
+  step  total_threads: ENV['THREADS'].to_i ||= 500,
         initial_delay: 0,
         start_threads: 20,
         add_threads: 0,
@@ -71,5 +71,5 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'],
   privacy: 'public',
   name: 'Loadtest API',
-  region: 'us-west-2',
+  region: ENV['REGION'] ||= 'us-west-2',
   override_parameters: '-Dsun.net.inetaddr.ttl=0'
