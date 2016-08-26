@@ -49,6 +49,7 @@ WORKDIR /etc/nginx
 ADD config/nginx.conf /etc/nginx/conf/nginx.conf
 ADD config/.htpasswd /etc/nginx/.htpasswd
 ADD config/sysctl.conf /etc/sysctl.conf
+ADD config/limits.conf /etc/security/limits.conf
 
 EXPOSE 8008
 
