@@ -29,6 +29,14 @@ create_api: get_elb_dns_name
 destroy_api: get_elb_dns_name
 	@cd terraform/api && TF_VAR_elb_dns_name=$(ELB_DNS_NAME) terraform destroy -var-file=$(_ROOT_DIR)/terraform.tfvars
 
+create_grid:
+	@curl --silent -u ${FLOOD_API_TOKEN}: -X POST https://api.flood.io/grids \
+	  -F "grid[region]=us-west-2" \
+	  -F "grid[infrastructure]=demand" \
+	  -F "grid[instance_quantity]=${NODES:-5}" \
+	  -F "grid[stop_after]=60" \
+	  -F "grid[instance_type]=m4.xlarge" | jq -r .
+
 get_elb_dns_name:
 	$(eval ELB_DNS_NAME := $(shell terraform output -state=terraform/elb/terraform.tfstate dns_name))
 
@@ -54,6 +62,12 @@ check_health:
 	@make check_elb
 	@echo API
 	@make check_api
+	@echo Grids
+	@make check_grids
+
+check_grids:
+	@curl --silent -u ${FLOOD_API_TOKEN}: -X GET https://api.flood.io/grids \
+		| jq -r '._embedded.grids[] | select(.infrastructure == "demand") | [.name,.status,.region,.instance_quantity]'
 
 loadtest: get_api_dns_name
 	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
