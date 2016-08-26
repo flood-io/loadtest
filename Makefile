@@ -70,7 +70,7 @@ check_grids:
 		| jq -r '._embedded.grids[] | select(.infrastructure == "demand") | [.name,.status,.region,.instance_quantity]'
 
 loadtest: get_api_dns_name
-	DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
+	@DOMAIN=$(API_DNS_NAME) ruby tests/load.rb
 
 loadtest_elb: get_elb_dns_name
-	DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http ruby tests/load.rb
+	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http ruby tests/load.rb
