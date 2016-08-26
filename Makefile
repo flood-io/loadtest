@@ -50,17 +50,17 @@ ssh_to_first_node: get_asg_first_ip
 	ssh core@$(ASG_FIRST_IP)
 
 check_elb: get_elb_dns_name
+	@echo ELB: $(ELB_DNS_NAME)
 	@curl --silent --connect-timeout 3 http://$(ELB_DNS_NAME)/api | jq -r .
 
 check_api: get_api_dns_name
+	@echo API: $(API_DNS_NAME)
 	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/api/ | jq -r .
 
 check_health:
 	@echo ELB instance health
 	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
-	@echo ELB nginx
 	@make check_elb
-	@echo API
 	@make check_api
 	@echo Grids
 	@make check_grids
