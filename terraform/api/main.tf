@@ -304,5 +304,5 @@ resource "aws_api_gateway_deployment" "api_deployment" {
 }
 
 output "dns_name" {
-  value = "${aws_api_gateway_rest_api.api_flooded.id}.execute-api.us-east-1.amazonaws.com"
+  value = "${aws_api_gateway_rest_api.api_flooded.id}.execute-api.us-west-2.amazonaws.com"
 }

@@ -70,6 +70,6 @@ test do
 # end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
 end.flood ENV['FLOOD_API_TOKEN'],
   privacy: 'public',
-  name: 'Loadtest API',
+  name: ENV['FLOOD_NAME'] ||= 'Loadtest API',
   region: ENV['REGION'] ||= 'us-west-2',
   override_parameters: '-Dsun.net.inetaddr.ttl=0'
