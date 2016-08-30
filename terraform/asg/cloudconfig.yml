@@ -37,6 +37,13 @@ coreos:
   update:
     reboot-strategy: off
   units:
+    - name: docker.service
+      drop-ins:
+        - name: 30-increase-ulimit.conf
+          content: |
+            [Service]
+            LimitMEMLOCK=infinity
+      command: restart
     - name: etcd2.service
       command: stop
     - name: fleet.service

@@ -5,7 +5,7 @@ MAINTAINER John Allen <john.allen@connexiolabs.com>
 ENV NGINX_VERSION nginx-1.7.11
 ENV DYNAMIC_VERSION f893a7971d85335127f080f03857065a22d82c79
 
-RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
+RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base varnish supervisor && \
     mkdir -p /tmp/src && \
     cd /tmp/src && \
     wget --no-check-certificate https://github.com/simpl/ngx_devel_kit/archive/v0.2.19.tar.gz && \
@@ -53,4 +53,7 @@ ADD config/limits.conf /etc/security/limits.conf
 
 EXPOSE 8008
 
-CMD ["nginx", "-g", "daemon off;"]
+ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD config/default.vcl /etc/varnish/default.vcl
+
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

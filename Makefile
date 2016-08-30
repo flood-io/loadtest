@@ -11,6 +11,9 @@ build:
 push:
 	@docker push floodio/loadtest
 
+run:
+	@docker run -it -p 8008:8008 floodio/loadtest
+
 create_elb:
 	@cd terraform/elb && terraform apply -var-file=$(_ROOT_DIR)/terraform.tfvars
 
