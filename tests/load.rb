@@ -24,11 +24,11 @@ test do
 
     random_timer 100, 200
 
-    get name: 'entry point', url: '/api' do
+    get name: 'entry point', url: '/api', sample: 100 do
       assert json: '.status', value: 'OK'
     end
 
-    post name: 'create session', url: '/api/oauth',
+    post name: 'create session', url: '/api/oauth', sample: 100,
       fill_in: {
         username: 'Michel Rosen',
         password: 4141414141
@@ -37,31 +37,31 @@ test do
       with_xhr
     end
 
-    get name: 'search', url: '/api/search',
+    get name: 'search', url: '/api/search', sample: 100,
       raw_body: '{"name":"Gumboots","price":10,"vendor_attendance_id":24,"product_id":1}' do
       assert json: '.status', value: 'OK'
     end
 
-    get name: 'get shipping estimate', url: '/api/shipping',
+    get name: 'get shipping estimate', url: '/api/shipping', sample: 100,
       raw_body: '{"postcode":"3781","state":"VIC","weight":850,"unit":"grams"}' do
       assert json: '.status', value: 'OK'
     end
 
-    post name: 'add to cart', url: '/api/cart',
+    post name: 'add to cart', url: '/api/cart', sample: 100,
       raw_body: '{"id":"1000101","quantity":10}' do
       assert json: '.status', value: 'OK'
     end
 
-    delete name: 'remove from cart', url: '/api/cart',
+    delete name: 'remove from cart', url: '/api/cart', sample: 100,
       raw_body: '{"id":"1000101","quantity":10}' do
       assert json: '.status', value: 'OK'
     end
 
-    get name: 'view cart', url: '/api/cart' do
+    get name: 'view cart', url: '/api/cart', sample: 100 do
       assert json: '.status', value: 'OK'
     end
 
-    delete name: 'destroy session', url: '/api/oauth?connections=${access_token_1}' do
+    delete name: 'destroy session', url: '/api/oauth?connections=${access_token_1}', sample: 100 do
       duration_assertion duration: 5_000
     end
 
@@ -71,5 +71,6 @@ test do
 end.flood ENV['FLOOD_API_TOKEN'],
   privacy: 'public',
   name: ENV['FLOOD_NAME'] ||= 'Loadtest API',
+  project: 'API Testing',
   region: ENV['REGION'] ||= 'us-west-2',
   override_parameters: '-Dsun.net.inetaddr.ttl=30'
