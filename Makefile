@@ -66,23 +66,22 @@ ssh_to_first_node: get_asg_first_ip
 
 check_elb: get_elb_dns_name
 	@echo ELB: $(ELB_DNS_NAME)
-	@curl --silent --connect-timeout 3 http://$(ELB_DNS_NAME)/api | jq -r .
+	@curl --silent --connect-timeout 3 http://$(ELB_DNS_NAME)/api | jq -r .status | uniq -c | sort
 
 check_api: get_api_dns_name
 	@echo API: $(API_DNS_NAME)
-	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/api/ | jq -r .
+	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/api/ | jq -r .status | uniq -c | sort
 
 check_health:
-	@echo ELB instance health
-	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r .
+	@echo ASG: flooded-asg
+	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r '.InstanceStates[] | .State' | sort | uniq -c | sort
 	@make check_elb
 	@make check_api
-	@echo Grids
+	@echo GRIDS:
 	@make check_grids
 
 check_grids:
-	@curl --silent -u ${FLOOD_API_TOKEN}: -X GET https://api.flood.io/grids \
-		| jq -r '._embedded.grids[] | select(.infrastructure == "demand") | [.name,.status,.region,.instance_quantity]'
+	@curl --silent --user ${FLOOD_API_TOKEN}: https://api.flood.io/grids | jq -r -c '._embedded.grids[] | select(.infrastructure == "demand") | .region as $$region| ._embedded.nodes[] | [.health, $$region] | @tsv' | sort | uniq -c | sort
 
 loadtest: get_api_dns_name
 	@echo Starting main test
