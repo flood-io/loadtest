@@ -48,6 +48,10 @@ create_grid_canary:
 	  -F "grid[stop_after]=240" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 
+create_grids:
+	@make create_grid
+	@make create_grid_canary
+
 get_elb_dns_name:
 	$(eval ELB_DNS_NAME := $(shell terraform output -state=terraform/elb/terraform.tfstate dns_name))
 
@@ -81,10 +85,11 @@ check_grids:
 		| jq -r '._embedded.grids[] | select(.infrastructure == "demand") | [.name,.status,.region,.instance_quantity]'
 
 loadtest: get_api_dns_name
-	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=1000 ruby tests/load.rb
+	@echo Starting canary test
+	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=1000 FLOOD_NAME="Load test API canary" ruby tests/load.rb
+	@echo Starting main test
+	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=1000 FLOOD_NAME="Load test API main" ruby tests/load.rb
 
 loadtest_elb: get_elb_dns_name
 	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=1000 FLOOD_NAME="Load test API main" ruby tests/load.rb
-
-loadtest_elb_canary: get_elb_dns_name
 	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API canary" ruby tests/load.rb

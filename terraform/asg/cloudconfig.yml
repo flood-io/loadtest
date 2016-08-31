@@ -49,7 +49,7 @@ coreos:
     - name: fleet.service
       command: stop
     - name: datadog.service
-      command: start
+      command: stop
       content: |
         [Unit]
         Description=dd-agent
