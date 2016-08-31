@@ -14,13 +14,13 @@ test do
 
   step  total_threads: ENV['THREADS'].to_i ||= 500,
         initial_delay: 0,
-        start_threads: 20,
+        start_threads: 100,
         add_threads: 0,
-        start_every: 30,
-        stop_threads: 50,
+        start_every: 60,
+        stop_threads: ENV['THREADS'].to_i ||= 500,
         stop_every: 5,
-        flight_time: 1_800,
-        rampup: 5 do
+        flight_time: 600,
+        rampup: 60 do
 
     random_timer 100, 200
 
