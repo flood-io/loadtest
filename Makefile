@@ -40,7 +40,7 @@ create_grid:
 	  -F "grid[stop_after]=240" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 
-create_grid_control:
+create_grid_canary:
 	@curl --silent -u ${FLOOD_API_TOKEN}: -X POST https://api.flood.io/grids \
 	  -F "grid[region]=us-west-1" \
 	  -F "grid[infrastructure]=demand" \
@@ -86,5 +86,5 @@ loadtest: get_api_dns_name
 loadtest_elb: get_elb_dns_name
 	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=1000 FLOOD_NAME="Load test API main" ruby tests/load.rb
 
-loadtest_elb_control: get_elb_dns_name
-	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API control" ruby tests/load.rb
+loadtest_elb_canary: get_elb_dns_name
+	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API canary" ruby tests/load.rb
