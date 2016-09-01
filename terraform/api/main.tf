@@ -31,7 +31,7 @@ resource "aws_api_gateway_integration" "root_get_integration" {
   http_method = "${aws_api_gateway_method.root_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.root_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api"
+  uri = "http://${var.elb_dns_name}/api"
 }
 
 resource "aws_api_gateway_method_response" "root_get_200" {
@@ -70,7 +70,7 @@ resource "aws_api_gateway_integration" "oauth_post_integration" {
   http_method = "${aws_api_gateway_method.oauth_post.http_method}"
   integration_http_method = "${aws_api_gateway_method.oauth_post.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/oauth"
+  uri = "http://${var.elb_dns_name}/api/oauth"
 }
 
 resource "aws_api_gateway_method_response" "oauth_post_200" {
@@ -100,7 +100,7 @@ resource "aws_api_gateway_integration" "oauth_delete_integration" {
   http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
   integration_http_method = "${aws_api_gateway_method.oauth_delete.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/oauth"
+  uri = "http://${var.elb_dns_name}/api/oauth"
 }
 
 resource "aws_api_gateway_method_response" "oauth_delete_200" {
@@ -139,7 +139,7 @@ resource "aws_api_gateway_integration" "search_get_integration" {
   http_method = "${aws_api_gateway_method.search_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.search_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
 
 resource "aws_api_gateway_method_response" "search_get_200" {
@@ -178,7 +178,7 @@ resource "aws_api_gateway_integration" "shipping_get_integration" {
   http_method = "${aws_api_gateway_method.shipping_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.shipping_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
 
 resource "aws_api_gateway_method_response" "shipping_get_200" {
@@ -217,7 +217,7 @@ resource "aws_api_gateway_integration" "cart_get_integration" {
   http_method = "${aws_api_gateway_method.cart_get.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_get.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
 
 resource "aws_api_gateway_method_response" "cart_get_200" {
@@ -247,7 +247,7 @@ resource "aws_api_gateway_integration" "cart_post_integration" {
   http_method = "${aws_api_gateway_method.cart_post.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_post.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
 
 resource "aws_api_gateway_method_response" "cart_post_200" {
@@ -277,7 +277,7 @@ resource "aws_api_gateway_integration" "cart_delete_integration" {
   http_method = "${aws_api_gateway_method.cart_delete.http_method}"
   integration_http_method = "${aws_api_gateway_method.cart_delete.http_method}"
   type = "HTTP"
-  uri = "http://${var.elb_dns_name}/v1/api/path"
+  uri = "http://${var.elb_dns_name}/api/path"
 }
 
 resource "aws_api_gateway_method_response" "cart_delete_200" {

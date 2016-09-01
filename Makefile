@@ -74,7 +74,7 @@ check_elb: get_elb_dns_name
 
 check_api: get_api_dns_name
 	@echo API: $(API_DNS_NAME)
-	curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/$(API_VERSION) | jq -r .status | uniq -c | sort
+	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/$(API_VERSION) | jq -r .status | uniq -c | sort
 
 check_grids:
 	@curl --silent --user ${FLOOD_API_TOKEN}: https://api.flood.io/grids | jq -r -c '._embedded.grids[] | select(.infrastructure == "demand") | .region as $$region| ._embedded.nodes[] | [.health, $$region] | @tsv' | sort | uniq -c | sort
