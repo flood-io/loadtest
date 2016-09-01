@@ -24,11 +24,11 @@ test do
 
     random_timer 100, 200
 
-    get name: 'entry point', url: '/v1/api', sample: 10 do
+    get name: 'entry point', url: "/#{ENV['VERSION']}", sample: 10 do
       assert json: '.status', value: 'OK'
     end
 
-    post name: 'create session', url: '/v1/api/oauth', sample: 10,
+    post name: 'create session', url: "/#{ENV['VERSION']}/oauth", sample: 10,
       fill_in: {
         username: 'Michel Rosen',
         password: 4141414141
@@ -37,31 +37,31 @@ test do
       with_xhr
     end
 
-    get name: 'search', url: '/v1/api/search', sample: 10,
+    get name: 'search', url: "/#{ENV['VERSION']}/search", sample: 10,
       raw_body: '{"name":"Gumboots","price":10,"vendor_attendance_id":24,"product_id":1}' do
       assert json: '.status', value: 'OK'
     end
 
-    get name: 'get shipping estimate', url: '/v1/api/shipping', sample: 10,
+    get name: 'get shipping estimate', url: "/#{ENV['VERSION']}/shipping", sample: 10,
       raw_body: '{"postcode":"3781","state":"VIC","weight":850,"unit":"grams"}' do
       assert json: '.status', value: 'OK'
     end
 
-    post name: 'add to cart', url: '/v1/api/cart', sample: 10,
+    post name: 'add to cart', url: "/#{ENV['VERSION']}/cart", sample: 10,
       raw_body: '{"id":"1000101","quantity":10}' do
       assert json: '.status', value: 'OK'
     end
 
-    delete name: 'remove from cart', url: '/v1/api/cart', sample: 10,
+    delete name: 'remove from cart', url: "/#{ENV['VERSION']}/cart", sample: 10,
       raw_body: '{"id":"1000101","quantity":10}' do
       assert json: '.status', value: 'OK'
     end
 
-    get name: 'view cart', url: '/v1/api/cart', sample: 10 do
+    get name: 'view cart', url: "/#{ENV['VERSION']}/cart", sample: 10 do
       assert json: '.status', value: 'OK'
     end
 
-    delete name: 'destroy session', url: '/v1/api/oauth?connections=${access_token_1}', sample: 10 do
+    delete name: 'destroy session', url: "/#{ENV['VERSION']}/oauth?connections=${access_token_1}", sample: 10 do
       duration_assertion duration: 5_000
     end
 

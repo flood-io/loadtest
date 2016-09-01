@@ -4,6 +4,7 @@ list:
 	@awk -F: '/^[A-z]/ {print $$1}' Makefile | sort
 
 _ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+API_VERSION:=v1
 
 build:
 	@docker build -t floodio/loadtest .
@@ -64,32 +65,34 @@ get_asg_first_ip:
 ssh_to_first_node: get_asg_first_ip
 	ssh core@$(ASG_FIRST_IP)
 
+check_asg:
+	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r '.InstanceStates[] | .State' | sort | uniq -c | sort
+
 check_elb: get_elb_dns_name
 	@echo ELB: $(ELB_DNS_NAME)
 	@curl --silent --connect-timeout 3 http://$(ELB_DNS_NAME)/api | jq -r .status | uniq -c | sort
 
 check_api: get_api_dns_name
 	@echo API: $(API_DNS_NAME)
-	@curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/api/ | jq -r .status | uniq -c | sort
+	curl --silent --connect-timeout 3 https://$(API_DNS_NAME)/$(API_VERSION) | jq -r .status | uniq -c | sort
+
+check_grids:
+	@curl --silent --user ${FLOOD_API_TOKEN}: https://api.flood.io/grids | jq -r -c '._embedded.grids[] | select(.infrastructure == "demand") | .region as $$region| ._embedded.nodes[] | [.health, $$region] | @tsv' | sort | uniq -c | sort
 
 check_health:
 	@echo ASG: flooded-asg
-	@aws --profile=flooded --region us-west-2 elb describe-instance-health --load-balancer-name flooded-elb | jq -r '.InstanceStates[] | .State' | sort | uniq -c | sort
+	@make check_asg
 	@make check_elb
 	@make check_api
 	@echo GRIDS:
 	@make check_grids
 
-check_grids:
-	@curl --silent --user ${FLOOD_API_TOKEN}: https://api.flood.io/grids | jq -r -c '._embedded.grids[] | select(.infrastructure == "demand") | .region as $$region| ._embedded.nodes[] | [.health, $$region] | @tsv' | sort | uniq -c | sort
-
 baseline: get_elb_dns_name
-	@echo Starting main test
-	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=ap-southeast-2 THREADS=500 FLOOD_NAME="Load test API baseline" ruby tests/load.rb
+	@echo "Starting baseline test"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=ap-southeast-2 THREADS=500 FLOOD_NAME="API baseline" ruby tests/load.rb
 
 loadtest: get_api_dns_name
-	@echo Starting main test
-	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="Load test API main" ruby tests/load.rb
-	@echo Starting canary test
-	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API canary" ruby tests/load.rb
-
+	@echo "Starting main test"
+	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API load test" ruby tests/load.rb
+	@echo "Starting canary test"
+	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=10 FLOOD_NAME="API canary test" ruby tests/load.rb
