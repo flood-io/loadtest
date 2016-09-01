@@ -83,14 +83,13 @@ check_health:
 check_grids:
 	@curl --silent --user ${FLOOD_API_TOKEN}: https://api.flood.io/grids | jq -r -c '._embedded.grids[] | select(.infrastructure == "demand") | .region as $$region| ._embedded.nodes[] | [.health, $$region] | @tsv' | sort | uniq -c | sort
 
+baseline: get_elb_dns_name
+	@echo Starting main test
+	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=ap-southeast-2 THREADS=500 FLOOD_NAME="Load test API baseline" ruby tests/load.rb
+
 loadtest: get_api_dns_name
 	@echo Starting main test
 	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="Load test API main" ruby tests/load.rb
 	@echo Starting canary test
 	@DOMAIN=$(API_DNS_NAME) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API canary" ruby tests/load.rb
 
-loadtest_elb: get_elb_dns_name
-	@echo Starting main test
-	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=500 FLOOD_NAME="Load test API main" ruby tests/load.rb
-	@echo Starting canary test
-	@DOMAIN=$(ELB_DNS_NAME) PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=10 FLOOD_NAME="Load test API canary" ruby tests/load.rb
