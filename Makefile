@@ -88,11 +88,15 @@ check_health:
 	@make check_grids
 
 baseline: get_elb_dns_name
-	@echo "Starting baseline test"
-	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=ap-southeast-2 THREADS=500 FLOOD_NAME="API baseline" ruby tests/load.rb
+	@echo "Starting baseline test for ELB"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=ap-southeast-2 THREADS=500 FLOOD_NAME="ELB baseline" ruby tests/load.rb
+
+shakeout: get_api_dns_name
+	@echo "Starting shakeout test for API"
+	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https THREADS=500 FLOOD_NAME="API shakeout" ruby tests/load.rb
 
 loadtest: get_api_dns_name
-	@echo "Starting main test"
+	@echo "Starting main test for API"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API load test" ruby tests/load.rb
-	@echo "Starting canary test"
+	@echo "Starting canary test for API"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=10 FLOOD_NAME="API canary test" ruby tests/load.rb
