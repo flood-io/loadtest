@@ -12,12 +12,12 @@ test do
     { name: 'Accept', value: 'application/json' }
   ]
 
-  step  total_threads: ENV['THREADS'].to_i ||= 500,
+  step  total_threads: ENV.fetch('THREADS', 500),
         initial_delay: 0,
         start_threads: 100,
         add_threads: 0,
         start_every: 60,
-        stop_threads: ENV['THREADS'].to_i ||= 500,
+        stop_threads: ENV.fetch('THREADS', 500),
         stop_every: 5,
         flight_time: 600,
         rampup: 60 do
