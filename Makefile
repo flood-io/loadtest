@@ -4,7 +4,7 @@ list:
 	@awk -F: '/^[A-z]/ {print $$1}' Makefile | sort
 
 _ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-API_VERSION:=v1
+API_VERSION:=v2
 
 build:
 	@docker build -t floodio/loadtest .
@@ -100,3 +100,9 @@ loadtest: get_api_dns_name
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=50 FLOOD_NAME="API canary test" ruby tests/load.rb
 	@echo "Starting main test for API"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API load test" ruby tests/load.rb
+
+loadtest_elb: get_elb_dns_name
+	@echo "Starting canary test for API"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=50 FLOOD_NAME="ELB canary test" ruby tests/load.rb
+	@echo "Starting main test for API"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=500 FLOOD_NAME="ELB load test" ruby tests/load.rb
