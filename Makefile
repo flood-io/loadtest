@@ -88,21 +88,21 @@ check_health:
 	@make check_grids
 
 baseline: get_elb_dns_name
-	@echo "Starting baseline test for ELB"
+	@echo "Starting baseline test for ELB us-west-1"
 	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=50 FLOOD_NAME="ELB baseline" ruby tests/load.rb
 
 shakeout: get_api_dns_name
-	@echo "Starting shakeout test for API"
+	@echo "Starting shakeout test for API us-west-1"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=500 FLOOD_NAME="API shakeout" ruby tests/load.rb
 
 loadtest: get_api_dns_name
-	@echo "Starting canary test for API"
+	@echo "Starting canary test for API us-west-1"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=50 FLOOD_NAME="API canary test" ruby tests/load.rb
-	@echo "Starting main test for API"
+	@echo "Starting main test for API us-west-2"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API load test" ruby tests/load.rb
 
 loadtest_elb: get_elb_dns_name
-	@echo "Starting canary test for API"
+	@echo "Starting canary test for ELB us-west-1"
 	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=50 FLOOD_NAME="ELB canary test" ruby tests/load.rb
-	@echo "Starting main test for API"
+	@echo "Starting main test for ELB us-west-2"
 	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=500 FLOOD_NAME="ELB load test" ruby tests/load.rb
