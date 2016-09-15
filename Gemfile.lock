@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ascii_charts (0.9.1)
+    awesome_print (1.7.0)
+    descriptive_statistics (2.5.1)
+    poisson (0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ascii_charts
+  awesome_print
+  descriptive_statistics
+  poisson
+
+BUNDLED WITH
+   1.12.5

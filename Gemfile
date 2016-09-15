@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+gem 'ascii_charts'
+gem 'awesome_print'
+gem 'poisson'
+gem 'descriptive_statistics'
