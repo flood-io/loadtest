@@ -6,7 +6,7 @@ require 'descriptive_statistics'
 @threads_range = 1000..5000
 @session_duration_range = 0..10
 @threads_uniques = 180_000
-distribution = $1 || :average
+distribution = ARGV[0] || :average
 
 def average(minute)
   [Array(@threads_range).median.to_i, minute + Array(@session_duration_range).median]
