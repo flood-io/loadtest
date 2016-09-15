@@ -6,6 +6,7 @@ require 'descriptive_statistics'
 @threads_range = 1000..5000
 @session_duration_range = 0..10
 @threads_uniques = 180_000
+distribution = $1 || :average
 
 def average(minute)
   [Array(@threads_range).median.to_i, minute + Array(@session_duration_range).median]
@@ -37,11 +38,4 @@ def chart(distribution = :average)
   @_chart.delete_if {|i| !0.step(60, 2).to_a.include?(i.first) }
 end
 
-ap "Averaged"
-puts AsciiCharts::Cartesian.new(chart(:average), bar: true, hide_zero: true).draw
-
-ap "Random Session Duration"
-puts AsciiCharts::Cartesian.new(chart(:random_duration), bar: true, hide_zero: true).draw
-
-ap "Poisson Distribution"
-puts AsciiCharts::Cartesian.new(chart(:poisson), bar: true, hide_zero: true).draw
+puts AsciiCharts::Cartesian.new(chart(distribution.to_sym), bar: true, hide_zero: true).draw
