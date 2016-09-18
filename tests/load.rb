@@ -64,8 +64,6 @@ test do
     delete name: 'destroy session', url: "/#{ENV['VERSION']}/oauth?connections=${access_token_1}", sample: 10 do
       duration_assertion duration: 5_000
     end
-
-    # view_results
   end
 # end.run(path: '/usr/share/jmeter-3.0/bin/', gui: true)
 end.flood ENV['FLOOD_API_TOKEN'],
