@@ -106,3 +106,9 @@ loadtest_elb: get_elb_dns_name
 	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=50 FLOOD_NAME="ELB canary test" ruby tests/load.rb
 	@echo "Starting main test for ELB us-west-2"
 	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=500 FLOOD_NAME="ELB load test" ruby tests/load.rb
+
+spike: get_api_dns_name
+	@echo "Starting canary test for API us-west-1"
+	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=50 FLOOD_NAME="API canary test" ruby tests/load.rb
+	@echo "Starting main test for API us-west-2"
+	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API spike test" ruby tests/spike.rb

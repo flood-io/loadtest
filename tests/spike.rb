@@ -58,4 +58,9 @@ test do
       duration_assertion duration: 5_000
     end
   end
-end.run(path: '/usr/share/jmeter/bin/', gui: true)
+end.flood ENV['FLOOD_API_TOKEN'],
+  privacy: 'public',
+  name: ENV['FLOOD_NAME'] ||= 'Spike API',
+  project: "API #{ENV['VERSION']}",
+  region: ENV['REGION'] ||= 'us-west-2',
+  override_parameters: '-Dsun.net.inetaddr.ttl=30'
