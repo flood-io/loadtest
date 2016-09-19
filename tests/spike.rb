@@ -9,15 +9,11 @@ test do
   with_user_agent :iphone
   with_json
 
-  step  total_threads: ENV.fetch('THREADS', 500),
-        initial_delay: 0,
-        start_threads: 100,
-        add_threads: 0,
-        start_every: 60,
-        stop_threads: ENV.fetch('THREADS', 500),
-        stop_every: 5,
-        flight_time: 600,
-        rampup: 60 do
+  ultimate [
+    { start_threads: 200, initial_delay: 0, start_time: 180, hold_time: 900, stop_time: 0 },
+    { start_threads: 200, initial_delay: 300, start_time: 60, hold_time: 360, stop_time: 0 },
+    { start_threads: 600, initial_delay: 600, start_time: 120, hold_time: 120, stop_time: 0 },
+  ], {on_sample_error: 'startnextloop'} do
 
     random_timer 100, 200
 
@@ -62,9 +58,4 @@ test do
       duration_assertion duration: 5_000
     end
   end
-end.flood ENV['FLOOD_API_TOKEN'],
-  privacy: 'public',
-  name: ENV['FLOOD_NAME'] ||= 'Loadtest API',
-  project: "API #{ENV['VERSION']}",
-  region: ENV['REGION'] ||= 'us-west-2',
-  override_parameters: '-Dsun.net.inetaddr.ttl=30'
+end.run(path: '/usr/share/jmeter/bin/', gui: true)
