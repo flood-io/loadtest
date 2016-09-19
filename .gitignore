@@ -1,5 +1,6 @@
 ruby-jmeter.jmx
 jmeter.log
+jmeter.jtl
 *.tfvars
 terraform.tfstate
 terraform.tfstate.backup
