@@ -15,7 +15,7 @@ test do
     { start_threads: 600, initial_delay: 600, start_time: 120, hold_time: 120, stop_time: 0 },
   ], {on_sample_error: 'startnextloop'} do
 
-    random_timer 100, 200
+    random_timer 10, 200
 
     get name: 'entry point', url: "/#{ENV['VERSION']}", sample: 10 do
       assert json: '.status', value: 'OK'
