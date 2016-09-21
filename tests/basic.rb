@@ -1,11 +1,12 @@
 require 'ruby-jmeter'
 
 test do
-  defaults  domain: 'localhost', port: 8008
+  defaults  domain: 'flooded.io', port: 80
 
-  threads count: 1, loops: 1 do
+  threads count: 10, loops: 5 do
 
     get url: '/api'
 
   end
-end.run(path: '/usr/share/jmeter/bin/')
+end.flood ENV['FLOOD_API_TOKEN'], privacy_flag: 'public',
+
