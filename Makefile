@@ -38,7 +38,7 @@ create_grid:
 	  -F "grid[region]=us-west-2" \
 	  -F "grid[infrastructure]=demand" \
 	  -F "grid[instance_quantity]=30" \
-	  -F "grid[stop_after]=240" \
+	  -F "grid[stop_after]=600" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 
 create_grid_canary:
@@ -46,7 +46,7 @@ create_grid_canary:
 	  -F "grid[region]=us-west-1" \
 	  -F "grid[infrastructure]=demand" \
 	  -F "grid[instance_quantity]=1" \
-	  -F "grid[stop_after]=240" \
+	  -F "grid[stop_after]=600" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 
 create_grids:
@@ -112,3 +112,9 @@ spike: get_api_dns_name
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-1 THREADS=50 FLOOD_NAME="API canary test" ruby tests/load.rb
 	@echo "Starting main test for API us-west-2"
 	@DOMAIN=$(API_DNS_NAME) VERSION=$(API_VERSION) PORT=443 PROTOCOL=https REGION=us-west-2 THREADS=500 FLOOD_NAME="API spike test" ruby tests/spike.rb
+
+spike_elb: get_elb_dns_name
+	@echo "Starting canary test for API us-west-1"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-1 THREADS=50 FLOOD_NAME="API canary test" ruby tests/load.rb
+	@echo "Starting main test for API us-west-2"
+	@DOMAIN=$(ELB_DNS_NAME) VERSION=api PORT=80 PROTOCOL=http REGION=us-west-2 THREADS=500 FLOOD_NAME="API spike test" ruby tests/spike.rb

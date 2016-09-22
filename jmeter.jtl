@@ -1,2 +1,0 @@
-timeStamp,elapsed,label,responseCode,threadName,success,failureMessage,bytes,grpThreads,allThreads,Latency,SampleCount,ErrorCount,"uuid"
-1474232104283,80,/api,200,ThreadGroup 1-1,true,,345,1,1,80,1,0,null
