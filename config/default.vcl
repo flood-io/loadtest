@@ -4,6 +4,12 @@ backend default {
   .host = "0.0.0.0:80";
 }
 
+sub vcl_recv {
+  if (req.url ~ "^/slow.*") {
+    return (pass);
+  }
+}
+
 sub vcl_deliver {
   if (obj.hits > 0) {
     set resp.http.X-Cache = "HIT";
