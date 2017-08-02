@@ -37,7 +37,7 @@ create_grid:
 	@curl --silent -u ${FLOOD_API_TOKEN}: -X POST https://api.flood.io/grids \
 	  -F "grid[region]=us-west-2" \
 	  -F "grid[infrastructure]=demand" \
-	  -F "grid[instance_quantity]=30" \
+	  -F "grid[instance_quantity]=90" \
 	  -F "grid[stop_after]=600" \
 	  -F "grid[instance_type]=m4.xlarge" | jq -r .
 

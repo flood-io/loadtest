@@ -34,12 +34,12 @@ test do
       with_xhr
     end
 
-    get name: 'search', url: "/#{ENV['VERSION']}/search", sample: 10,
+    post name: 'search', url: "/#{ENV['VERSION']}/search", sample: 10,
       raw_body: '{"name":"Gumboots","price":10,"vendor_attendance_id":24,"product_id":1}' do
       assert json: '.status', value: 'OK'
     end
 
-    get name: 'get shipping estimate', url: "/#{ENV['VERSION']}/shipping", sample: 10,
+    post name: 'get shipping estimate', url: "/#{ENV['VERSION']}/shipping", sample: 10,
       raw_body: '{"postcode":"3781","state":"VIC","weight":850,"unit":"grams"}' do
       assert json: '.status', value: 'OK'
     end
