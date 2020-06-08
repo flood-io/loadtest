@@ -17,6 +17,6 @@ test do
         extract json: '.access_token', name: 'access_token'
       with_xhr
     end
-
   end
-end.run(path: '/usr/share/jmeter/bin/')
+  console_status_logger
+end.run(path: '/usr/local/Cellar/jmeter/5.2.1/bin/')
