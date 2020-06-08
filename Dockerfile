@@ -1,6 +1,6 @@
 FROM alpine:3.1
 
-MAINTAINER John Allen <john.allen@connexiolabs.com>
+LABEL author=tim@flood.io
 
 ENV NGINX_VERSION nginx-1.7.11
 ENV DYNAMIC_VERSION f893a7971d85335127f080f03857065a22d82c79
