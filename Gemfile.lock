@@ -2,32 +2,32 @@ GEM
   remote: https://rubygems.org/
   specs:
     ascii_charts (0.9.1)
-    awesome_print (1.7.0)
+    awesome_print (1.8.0)
     descriptive_statistics (2.5.1)
-    domain_name (0.5.20160826)
+    domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    http-cookie (1.0.2)
+    http-accept (1.7.0)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
-    mime-types (3.1)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2016.0521)
-    mini_portile2 (2.1.0)
+    mime-types-data (3.2020.0512)
+    mini_portile2 (2.4.0)
     netrc (0.11.0)
-    nokogiri (1.6.8)
-      mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
-    pkg-config (1.1.7)
+    nokogiri (1.10.9)
+      mini_portile2 (~> 2.4.0)
     poisson (0.1)
-    rest-client (2.0.0)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    ruby-jmeter (3.0.6)
+    ruby-jmeter (3.1.08)
       nokogiri
       rest-client
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.7)
 
 PLATFORMS
   ruby
@@ -40,4 +40,4 @@ DEPENDENCIES
   ruby-jmeter
 
 BUNDLED WITH
-   1.12.5
+   1.17.3
