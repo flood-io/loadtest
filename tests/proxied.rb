@@ -15,4 +15,4 @@ test do
     get name: 'entry point', url: '/api'
 
   end
-end.run(path: '/usr/share/jmeter/bin/')
+end.run(path: '/usr/local/Cellar/jmeter/5.2.1/bin/')
