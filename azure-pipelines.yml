@@ -140,3 +140,18 @@ stages:
                 message="${message} and is available at $url.<br><br>[Learn More](https://aka.ms/testwithreviewapps) about how to test and provide feedback for the app."
               fi
               echo "##vso[task.setvariable variable=GITHUB_COMMENT]$message"
+
+- stage: Baseline
+  displayName: Load test stage
+  jobs:
+  - job: Baseline
+    displayName: Baseline
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: PowerShell@2
+      inputs:
+        filePath: 'scripts/baseline.ps1'
+      displayName: 'Launch Flood'
+      env:
+        MY_FLOOD_TOKEN: $(flood_api_token)
