@@ -137,7 +137,7 @@ stages:
               message="Your review app has been deployed"
               if [ ! -z "$url" -a "$url" != "http://:" ]
               then
-                message="${message} and is available at $url.<br><br>[Learn More](https://aka.ms/testwithreviewapps) about how to test and provide feedback for the app."
+                message="${message} and is available at $url."
               fi
               echo "##vso[task.setvariable variable=GITHUB_COMMENT]$message"
 
