@@ -140,6 +140,7 @@ stages:
                 message="${message} and is available at $url."
               fi
               echo "##vso[task.setvariable variable=GITHUB_COMMENT]$message"
+              echo "##vso[task.setvariable variable=TARGET_URL;]$url"
 
 - stage: Baseline
   displayName: Load test stage
