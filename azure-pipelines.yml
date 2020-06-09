@@ -155,3 +155,11 @@ stages:
       displayName: 'Launch Flood'
       env:
         MY_FLOOD_TOKEN: $(flood_api_token)
+    - task: PowerShell@2
+      inputs:
+        filePath: 'scripts/verify.ps1'
+        failOnStderr: true
+      displayName: 'Flood & SLA Verification'
+      env:
+        MY_FLOOD_TOKEN: $(flood_api_token)
+        MY_FLOOD_UUID: $(flood_uuid)
