@@ -37,8 +37,8 @@ try {
 
     $outFloodID = $responseFull.uuid
     Write-Output "Flood ID is: $outFloodID"
-    Write-Output "##vso[task.setvariable variable=flood_uuid;]$outFloodID"
-    Write-Output "##vso[task.setvariable variable=GITHUB_COMMENT;]Your flood results are at: https://app.flood.io/$outFloodID"
+    Write-Output "##vso[task.setvariable variable=flood_uuid]$outFloodID"
+    Write-Output "##vso[task.setvariable variable=GITHUB_COMMENT]Your flood results are at: https://app.flood.io/$outFloodID"
 }
 catch {
     $responseBody = ""
